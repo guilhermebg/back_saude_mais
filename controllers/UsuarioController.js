@@ -28,12 +28,18 @@ exports.add = (req, res) => {
     const { name,sobrenome,email,cpf } = req.body
     if(!name || !email||!cpf){
         res.status(200).json({ message: 'Usuário Não Cadastrado algum dos campos obrigatórios não foram preenchidos' });
-    }if(Usuario.findOne({where:{cpf:cpf}})){
-        res.status(200).json({ message: 'Já existe um usuário com esse cpf'});
     }
     else{
-        const newUsuario = Usuario.create({  name,sobrenome,email,cpf });
-        res.status(201).json({ message: 'Usuário Criado com Sucesso ' });
+        Usuario.findOne({where:{cpf:cpf}}).then((newusuario)=>{
+            if(newusuario){
+                res.status(404).json({ message: `CPF já Possui cadastro ${name}` });
+            } else{
+                const newUsuario = Usuario.create({  name,sobrenome,email,cpf });
+                res.status(201).json({ message: 'Usuário Criado com Sucesso ' });
+            }
+        })
+       // 
+       // 
     }
 
 

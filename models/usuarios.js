@@ -1,6 +1,6 @@
 const sequelize = require("../database/sequelize");
 const Sequelize = require('sequelize')
-const Usuario = sequelize.define('usuario', {
+const Usuario = sequelize.define('usuarios', {
     id: {
         //field:'usuarioid',
         type: Sequelize.INTEGER,//Informando  o Tipo do Dado como Inteiro
@@ -28,8 +28,7 @@ const Usuario = sequelize.define('usuario', {
         type: Sequelize.DATE//Informando  o Tipo do Dado como data
     },
 },{
-    timestamps: false
-}, {
+    timestamps: false,
     tableName: 'usuarios'
 })
 
