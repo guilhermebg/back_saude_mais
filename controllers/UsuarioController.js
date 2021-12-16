@@ -1,13 +1,17 @@
 const Usuario = require('../models/usuarios');
 
 
-exports.usuario_all = (req, res) => {
-    Usuario.findAll().then((usuario) => {  // estou armazenando tudo dentro do objeto usuário
-        return res.json(usuario) // estou solicitando que ele seja mostrado em forma de json.
+exports.list = (req, res) => {
+    Usuario.findAll().then((usuario) => {  
+        if(usuario){// estou armazenando tudo dentro do objeto usuário
+        return res.json(usuario)
+        }else{
+            res.status(404).send();
+        } // estou solicitando que ele seja mostrado em forma de json.
     })
 }
 
-exports.usuario_find = (req, res) => {
+exports.find = (req, res) => {
     let { id } = req.params; // sempre que precisar passar parametros por url {} instrução de JS igual passamos props em react
 
     Usuario.findByPk(id).then((usuario) => { //.findByPk estou fazendo uma busca no Pk(primary key)
@@ -29,7 +33,7 @@ exports.add = (req, res) => {
     }
     else{
         const newUsuario = Usuario.create({  name,sobrenome,email,cpf });
-        res.status(200).json({ message: 'Usuário Criado com Sucesso ' });
+        res.status(201).json({ message: 'Usuário Criado com Sucesso ' });
     }
 
 
